@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthRoutingModule } from './modules/auth/auth-routing.module';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { MainLayoutModule } from './modules/main-layout/main-layout.module';
-import { MenuModule } from './modules/menu/menu.module';
-import { OrdersModule } from './modules/orders/orders.module';
-import { ShitfModule } from './modules/shitf/shitf.module';
-import { TablesModule } from './modules/tables/tables.module';
+import { MLayoutComponent } from './layout/MainLayout/m-layout/m-layout.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: MLayoutComponent,
+    children: [
+      { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
+      // Load the MenuModule with an additional 'menu' path
+      { path: 'menu', loadChildren: () => import('./modules/menu/menu.module').then(m => m.MenuModule) },
+      { path: 'orders', loadChildren: () => import('./modules/orders/orders.module').then(m => m.OrdersModule) },
+      // Add more routes as needed
+    ]
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to the default route
+  { path: '**', redirectTo: 'dashboard' }, // Redirect any other unknown routes to the default route
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes),
-    AuthRoutingModule,
-    DashboardModule,
-    MainLayoutModule,
-    MenuModule,
-    OrdersModule,
-    ShitfModule,
-    TablesModule,
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
