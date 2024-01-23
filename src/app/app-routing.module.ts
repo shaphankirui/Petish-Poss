@@ -11,11 +11,12 @@ const routes: Routes = [
       // Load the MenuModule with an additional 'menu' path
       { path: 'menu', loadChildren: () => import('./modules/menu/menu.module').then(m => m.MenuModule) },
       { path: 'orders', loadChildren: () => import('./modules/orders/orders.module').then(m => m.OrdersModule) },
+      { path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule) },
       // Add more routes as needed
     ]
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to the default route
-  { path: '**', redirectTo: 'dashboard' }, // Redirect any other unknown routes to the default route
+  // { path: '**', redirectTo: 'dashboard' }, 
 ];
 
 @NgModule({
