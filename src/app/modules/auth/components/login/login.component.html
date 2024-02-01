@@ -1,12 +1,55 @@
-<div class="flex flex-row">
-    <div class="bg-slate-500 w-1/2 h-screen ">
+<div>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    </div>
-    <div class="w-1/2 h-screen bg-neutral-900 flex justify-center flex-col items-center">
-        <h1 class="text-red-700 text-center mt-3">PeTiSh-Pos</h1>
-        <div class="w-[60%] h-[90vh] bg-red-600 mt-3 ">
+    <div class="bg-gray-100 h-screen flex items-center justify-center">
+
+        <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
+
+            <h2 class="text-2xl font-semibold mb-4">Login</h2>
+
+            <!-- Password Input Field -->
+            <input type="password" id="passwordInput" class="w-full px-3 py-2 border rounded mb-4" placeholder="Password" readonly>
+
+            <!-- Number Buttons -->
+            <div class="grid grid-cols-3 gap-4">
+                <button onclick="appendNumber(1)" class="btn-number">1</button>
+                <button onclick="appendNumber(2)" class="btn-number">2</button>
+                <button onclick="appendNumber(3)" class="btn-number">3</button>
+                <button onclick="appendNumber(4)" class="btn-number">4</button>
+                <button onclick="appendNumber(5)" class="btn-number">5</button>
+                <button onclick="appendNumber(6)" class="btn-number">6</button>
+                <button onclick="appendNumber(7)" class="btn-number">7</button>
+                <button onclick="appendNumber(8)" class="btn-number">8</button>
+                <button onclick="appendNumber(9)" class="btn-number">9</button>
+                <button onclick="clearPassword()" class="btn-number">C</button>
+                <button onclick="appendNumber(0)" class="btn-number">0</button>
+                <button onclick="submitPassword()" class="btn-number">Submit</button>
+            </div>
 
         </div>
+
     </div>
 
+    <script>
+        // JavaScript functions
+        let passwordInput = document.getElementById('passwordInput');
+
+        function appendNumber(number) {
+            passwordInput.value += number;
+        }
+
+        function clearPassword() {
+            passwordInput.value = '';
+        }
+
+        function submitPassword() {
+            if (passwordInput.value !== '') {
+                // Perform login or further processing here
+                alert('Login successful!');
+            } else {
+                alert('Password cannot be empty!');
+            }
+        }
+    </script>
 </div>
