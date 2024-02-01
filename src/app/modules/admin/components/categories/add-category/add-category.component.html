@@ -1,14 +1,23 @@
-<div id="category-form">
-    <h2><b><i>Add Category</i></b></h2>
-    <label for="category-name">Category Name:</label>
-    <input type="text" id="category-name" placeholder="Enter category name" required>
-  
-    <label for="category-icon">Icon:</label>
-    <input type="file" id="category-icon" accept="image/*" required>
-  
-    <label for="category-description">Category Description:</label>
-    <textarea id="category-description" placeholder="Enter category description" required></textarea>
-  
-    <button onclick="addCategory()">Add Category</button>
+<div class="max-w-md mx-auto bg-gray-300 rounded-xl overflow-hidden shadow-md">
+  <div id="category-form" class="p-6">
+    <h2 class="text-2xl font-bold mb-4"><i>Add Category</i></h2>
+    <form>
+      <div class="mb-4">
+        <label for="category-name" class="block text-sm font-medium text-gray-700">Category Name:</label>
+        <input type="text" id="category-name" placeholder="Enter category name" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+      </div>
+
+      <div class="mb-4">
+        <label for="category-icon" class="block text-sm font-medium text-gray-700">Icon:</label>
+        <input type="file" id="category-icon" accept="image/*" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+      </div>
+
+      <div class="mb-4">
+        <label for="category-description" class="block text-sm font-medium text-gray-700">Category Description:</label>
+        <textarea id="category-description" placeholder="Enter category description" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+      </div>
+
+      <button type="button" onclick="addCategory()" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-green-600 text-white py-2 px-4 rounded-md transition-colors duration-300 ease-in-out">Add Category</button>
+    </form>
   </div>
-  
+</div>
