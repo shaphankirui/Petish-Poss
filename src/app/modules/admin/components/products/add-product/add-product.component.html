@@ -1,1 +1,95 @@
-<p>add-product works!</p>
+<div class="form-container">
+    <h2>Add Product</h2>
+    <form id="productForm" onsubmit="return validateForm()">
+      <!-- Row 1 -->
+      <div class="form-row">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required>
+        <span class="error-message" id="productNameError"></span>
+      </div>
+  
+      <div class="form-row">
+        <label for="productPrice">Product Price:</label>
+        <input type="number" id="productPrice" name="productPrice" required>
+        <span class="error-message" id="productPriceError"></span>
+      </div>
+  
+      <div class="form-row">
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+          <option value="">Select Category</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Beverages">Beverages</option>
+          <option value="Appetizerst">Appetizers</option>
+          <option value="launch">Launch</option>
+          <option value="Salads">Salads</option>
+          <!-- Add more options as needed -->
+        </select>
+        <span class="error-message" id="categoryError"></span>
+      </div>
+  
+      <div class="form-row">
+        <label for="productQuantity">Product Quantity:</label>
+        <input type="number" id="productQuantity" name="productQuantity" required>
+        <span class="error-message" id="productQuantityError"></span>
+      </div>
+  
+      <!-- Row 2 -->
+      <div class="form-row">
+        <label>Is Service:</label>
+        <input type="checkbox" id="isService" name="isService">
+      </div>
+  
+      <div class="form-row">
+        <label for="specification">Specification:</label>
+        <textarea id="specification" name="specification"></textarea>
+      </div>
+  
+      <div class="form-row">
+        <button type="submit">Add Product</button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    function validateForm() {
+      var productName = document.getElementById("productName").value;
+      var productPrice = document.getElementById("productPrice").value;
+      var category = document.getElementById("category").value;
+      var productQuantity = document.getElementById("productQuantity").value;
+  
+      var productNameError = document.getElementById("productNameError");
+      var productPriceError = document.getElementById("productPriceError");
+      var categoryError = document.getElementById("categoryError");
+      var productQuantityError = document.getElementById("productQuantityError");
+  
+      productNameError.innerHTML = "";
+      productPriceError.innerHTML = "";
+      categoryError.innerHTML = "";
+      productQuantityError.innerHTML = "";
+  
+      var isValid = true;
+  
+      if (productName.trim() === "") {
+        productNameError.innerHTML = "Product Name is required";
+        isValid = false;
+      }
+  
+      if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+        productPriceError.innerHTML = "Product Price must be a valid positive number";
+        isValid = false;
+      }
+  
+      if (category === "") {
+        categoryError.innerHTML = "Category is required";
+        isValid = false;
+      }
+  
+      if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
+        productQuantityError.innerHTML = "Product Quantity must be a valid positive integer";
+        isValid = false;
+      }
+  
+      return isValid;
+    }
+  </script>

@@ -1,0 +1,49 @@
+#category-form {
+    border: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .input-group label {
+    margin-bottom: 5px; /* Fixed width for labels */
+  }
+  
+  .input-group {
+  border: 1px solid black; /* Black border around the entire input group */
+  padding: 5px; /* Add padding to create space between the border and inputs */
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group textarea {
+  border: none; /* Remove individual input borders */
+  width: 100%; /* Expand input fields to fill the input group */
+  padding: 8px;
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+  
+  button {
+    width: 100%; /* Button spans full width */
+    padding: 10px;
+    background-color: #5863c5; /* Green color */
+    color: rgb(236, 236, 236);
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #239644; /* Darker green color on hover */
+  }
