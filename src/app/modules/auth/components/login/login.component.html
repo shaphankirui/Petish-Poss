@@ -1,55 +1,98 @@
 <div>
-    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+  
     <div class="bg-gray-100 h-screen flex items-center justify-center">
-
-        <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
-
-            <h2 class="text-2xl font-semibold mb-4">Login</h2>
-
-            <!-- Password Input Field -->
-            <input type="password" id="passwordInput" class="w-full px-3 py-2 border rounded mb-4" placeholder="Password" readonly>
-
-            <!-- Number Buttons -->
-            <div class="grid grid-cols-3 gap-4">
-                <button onclick="appendNumber(1)" class="btn-number">1</button>
-                <button onclick="appendNumber(2)" class="btn-number">2</button>
-                <button onclick="appendNumber(3)" class="btn-number">3</button>
-                <button onclick="appendNumber(4)" class="btn-number">4</button>
-                <button onclick="appendNumber(5)" class="btn-number">5</button>
-                <button onclick="appendNumber(6)" class="btn-number">6</button>
-                <button onclick="appendNumber(7)" class="btn-number">7</button>
-                <button onclick="appendNumber(8)" class="btn-number">8</button>
-                <button onclick="appendNumber(9)" class="btn-number">9</button>
-                <button onclick="clearPassword()" class="btn-number">C</button>
-                <button onclick="appendNumber(0)" class="btn-number">0</button>
-                <button onclick="submitPassword()" class="btn-number">Submit</button>
-            </div>
-
+      <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">Login</h2>
+  
+        <input type="password" id="passwordInput" class="w-full px-3 py-2 border rounded mb-4" placeholder="Password" readonly>
+  
+        <div class="grid grid-cols-3 gap-4">
+          <div class="btn-box">
+            <button onclick="appendNumber(1)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">1</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(2)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">2</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(3)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">3</span>
+            </button>
+          </div>
+  
+          <div class="btn-box">
+            <button onclick="appendNumber(4)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">4</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(5)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">5</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(6)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">6</span>
+            </button>
+          </div>
+  
+          <div class="btn-box">
+            <button onclick="appendNumber(7)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">7</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(8)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">8</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="appendNumber(9)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">9</span>
+            </button>
+          </div>
+  
+          <div class="btn-box">
+            <button onclick="appendNumber(0)" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">0</span>
+            </button>
+          </div>
+          <div class="btn-box">
+            <button onclick="deleteLastDigit()" class="rounded-full w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+              <span class="text-2xl">Del</span>
+            </button>
+          </div>
+  
+          <div class="btn-box">
+            <button onclick="submitPassword()" class="rounded-full w-16 h-16 flex items-center justify-center bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <span class="text-2xl">Login</span>
+            </button>
+          </div>
         </div>
-
+      </div>
     </div>
-
-    <script>
-        // JavaScript functions
-        let passwordInput = document.getElementById('passwordInput');
-
-        function appendNumber(number) {
-            passwordInput.value += number;
-        }
-
-        function clearPassword() {
-            passwordInput.value = '';
-        }
-
-        function submitPassword() {
-            if (passwordInput.value !== '') {
-                // Perform login or further processing here
-                alert('Login successful!');
-            } else {
-                alert('Password cannot be empty!');
-            }
-        }
-    </script>
-</div>
+  </div>
+  
+  <script>
+    function appendNumber(number) {
+      var passwordInput = document.getElementById('passwordInput');
+      passwordInput.type = 'text'; // Change input type to text temporarily
+      passwordInput.value += '*'; // Display asterisk instead of the actual number
+      passwordInput.type = 'password'; // Switch it back to password
+    }
+  
+    function deleteLastDigit() {
+      var currentPassword = document.getElementById('passwordInput').value;
+      document.getElementById('passwordInput').value = currentPassword.slice(0, -1);
+    }
+  
+    function submitPassword() {
+      var enteredPassword = document.getElementById('passwordInput').value;
+      alert("Submitted Password: " + enteredPassword);
+    }
+  </script>
+  
