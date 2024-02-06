@@ -1,22 +1,26 @@
-<div class="form-container">
-    <h2>Add Product</h2>
+<div class="flex items-center justify-center h-screen bg-gray-200">
+  <div class="bg-gray-300 p-8 shadow-md rounded-md w-3/4">
+    <h2 class="text-2xl text-center font-bold mb-4">Add Product</h2>
     <form id="productForm" onsubmit="return validateForm()">
       <!-- Row 1 -->
-      <div class="form-row">
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" name="productName" required>
-        <span class="error-message" id="productNameError"></span>
+      <div class="form-row mb-4">
+        <label for="productName" class="block text-sm font-medium text-gray-600">Product Name:</label>
+        <input type="text" id="productName" name="productName" required
+               class="mt-1 p-2 border rounded-md w-full">
+        <span class="error-message text-red-500" id="productNameError"></span>
       </div>
-  
-      <div class="form-row">
-        <label for="productPrice">Product Price:</label>
-        <input type="number" id="productPrice" name="productPrice" required>
-        <span class="error-message" id="productPriceError"></span>
+
+      <div class="form-row mb-4">
+        <label for="productPrice" class="block text-sm font-medium text-gray-600">Product Price:</label>
+        <input type="number" id="productPrice" name="productPrice" required
+               class="mt-1 p-2 border rounded-md w-full">
+        <span class="error-message text-red" id="productPriceError"></span>
       </div>
-  
-      <div class="form-row">
-        <label for="category">Category:</label>
-        <select id="category" name="category" required>
+
+      <div class="form-row mb-4">
+        <label for="category" class="block text-sm font-medium text-gray-600">Category:</label>
+        <select id="category" name="category" required
+                class="mt-1 p-2 border rounded-md w-full">
           <option value="">Select Category</option>
           <option value="Breakfast">Breakfast</option>
           <option value="Beverages">Beverages</option>
@@ -25,31 +29,34 @@
           <option value="Salads">Salads</option>
           <!-- Add more options as needed -->
         </select>
-        <span class="error-message" id="categoryError"></span>
+        <span class="error-message text-red-500" id="categoryError"></span>
       </div>
-  
-      <div class="form-row">
-        <label for="productQuantity">Product Quantity:</label>
-        <input type="number" id="productQuantity" name="productQuantity" required>
-        <span class="error-message" id="productQuantityError"></span>
+
+      <div class="form-row mb-4">
+        <label for="productQuantity" class="block text-sm font-medium text-gray-600">Product Quantity:</label>
+        <input type="number" id="productQuantity" name="productQuantity" required
+               class="mt-1 p-2 border rounded-md w-full">
+        <span class="error-message text-red-500" id="productQuantityError"></span>
       </div>
-  
+
       <!-- Row 2 -->
-      <div class="form-row">
-        <label>Is Service:</label>
-        <input type="checkbox" id="isService" name="isService">
+      <div class="form-row mb-4">
+        <label class="block text-sm font-medium text-gray-600">Is Service:</label>
+        <input type="checkbox" id="isService" name="isService" class="mt-1">
       </div>
-  
-      <div class="form-row">
-        <label for="specification">Specification:</label>
-        <textarea id="specification" name="specification"></textarea>
+
+      <div class="form-row mb-4">
+        <label for="specification" class="block text-sm font-medium text-gray-600">Specification:</label>
+        <textarea id="specification" name="specification" class="mt-1 p-2 border rounded-md w-full"></textarea>
       </div>
-  
+
       <div class="form-row">
-        <button type="submit">Add Product</button>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Add Product</button>
       </div>
     </form>
   </div>
+</div>
+
   
   <script>
     function validateForm() {
