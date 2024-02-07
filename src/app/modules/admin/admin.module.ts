@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { AddCategoryComponent } from './components/categories/add-category/add-c
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

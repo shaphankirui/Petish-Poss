@@ -5,36 +5,31 @@
       <!-- Row 1 -->
       <div class="form-row mb-4">
         <label for="productName" class="block text-sm font-medium text-gray-600">Product Name:</label>
-        <input type="text" id="productName" name="productName" required
+        <input type="text" id="productName" name="productName" required [(ngModel)]="productName"
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productNameError"></span>
       </div>
 
       <div class="form-row mb-4">
         <label for="productPrice" class="block text-sm font-medium text-gray-600">Product Price:</label>
-        <input type="number" id="productPrice" name="productPrice" required
+        <input type="number" id="productPrice" name="productPrice" required [(ngModel)]="productPrice"
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red" id="productPriceError"></span>
       </div>
 
       <div class="form-row mb-4">
         <label for="category" class="block text-sm font-medium text-gray-600">Category:</label>
-        <select id="category" name="category" required
-                class="mt-1 p-2 border rounded-md w-full">
-          <option value="">Select Category</option>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Beverages">Beverages</option>
-          <option value="Appetizerst">Appetizers</option>
-          <option value="launch">Launch</option>
-          <option value="Salads">Salads</option>
-          <!-- Add more options as needed -->
+        <select id="category" name="category" required  [(ngModel)]="selectedCategory"
+        class="mt-1 p-2 border rounded-md w-full">
+          <option [ngValue]="0">Select a Category</option>
+          <option class="text-gray-700" *ngFor="let category of categories" [ngValue]="category.id">{{ category.category_name }}</option>
         </select>
         <span class="error-message text-red-500" id="categoryError"></span>
       </div>
 
-      <div class="form-row mb-4">
+      <div class="form-row mb-4"*ngIf="!is_service">
         <label for="productQuantity" class="block text-sm font-medium text-gray-600">Product Quantity:</label>
-        <input type="number" id="productQuantity" name="productQuantity" required
+        <input type="number" id="productQuantity" name="productQuantity" required [(ngModel)]="productQuantity"
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productQuantityError"></span>
       </div>
@@ -42,16 +37,16 @@
       <!-- Row 2 -->
       <div class="form-row mb-4">
         <label class="block text-sm font-medium text-gray-600">Is Service:</label>
-        <input type="checkbox" id="isService" name="isService" class="mt-1">
+        <input type="checkbox"  [(ngModel)]="is_service" id="isService" name="isService" class="mt-1">
       </div>
 
       <div class="form-row mb-4">
         <label for="specification" class="block text-sm font-medium text-gray-600">Specification:</label>
-        <textarea id="specification" name="specification" class="mt-1 p-2 border rounded-md w-full"></textarea>
+        <textarea [(ngModel)]="specificationArray" id="specification" name="specification" class="mt-1 p-2 border rounded-md w-full"></textarea>
       </div>
 
       <div class="form-row">
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Add Product</button>
+        <button type="submit" class="bg-blue-500  text-white p-2 rounded-md" (click)="onSubmit()">Add Product</button>
       </div>
     </form>
   </div>
