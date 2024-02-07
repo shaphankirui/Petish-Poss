@@ -1,14 +1,16 @@
-<div id="category-form">
-    <h2><b><i>Add Category</i></b></h2>
-    <label for="category-name">Category Name:</label>
-    <input type="text" id="category-name" placeholder="Enter category name" required>
-  
-    <label for="category-icon">Icon:</label>
-    <input type="file" id="category-icon" accept="image/*" required>
-  
-    <label for="category-description">Category Description:</label>
-    <textarea id="category-description" placeholder="Enter category description" required></textarea>
-  
-    <button onclick="addCategory()">Add Category</button>
+<div class="flex justify-center items-center">
+  <div id="category-form" class="p-4 border rounded-md shadow-md w-[60%]">
+    <h2 class="font-bold italic text-lg mb-4">Add Category</h2>
+    
+    <label for="category-name" class="block mb-2">Category Name:</label>
+    <input [(ngModel)]="categoryName" type="text" id="category-name" placeholder="Enter category name" class="w-full p-2 border rounded-md mb-4" required>
+
+    <label for="category-icon" class="block mb-2">Icon:</label>
+    <input (change)="onFileSelected($event)" type="file" id="category-icon" accept="image/*" class="w-full p-2 border rounded-md mb-4" required>
+
+    <label for="category-description" class="block mb-2">Category Description:</label>
+    <textarea id="category-description" placeholder="Enter category description" class="w-full p-2 border rounded-md mb-4" required></textarea>
+
+    <button (click)="onSubmit()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Add Category</button>
   </div>
-  
+</div>

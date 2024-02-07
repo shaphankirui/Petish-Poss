@@ -1,6 +1,8 @@
 import { SelectedOrder } from "./SelectedOrder";
 
 export interface product {
+  selectedSpecification: string;
+  specification: any;
   deleted: any;
 is_service: any;
   quantityToAdd: any;
