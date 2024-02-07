@@ -6,60 +6,36 @@
       </svg>
   </div>
   <div class="mt-5 flex flex-row">
-      <div class="w-[70%] pl-5">
-          <div class="flex flex-wrap -mx-4">
+    <div class="flex flex-col w-[70%] pl-5">
+        <div class="h-[61vh] overflow-y-auto ">
+            <div class="flex flex-wrap -mx-4 "*ngIf="activeCategory">
               <!-- Start of new product block -->
-              <div class="w-1/4 px-1 mb-2">
-                  <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
-                      <div class="h-[100px] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
-                          <!-- You can add overlay content here -->
-                      </div>
-                      <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
-                          <h3 class="text-lg font-semibold text-black">Product Name</h3> <!-- Changed text color to black -->
-                          <p class="text-sm text-gray-600 mb-1">Category:</p>
-                          <!-- You can add other product details here -->
-                      </div>
+              <div class="w-1/4 px-4 mb-2 " *ngFor="let product of activeCategory.products">
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                  <div class="h-[10vh] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
+                    <!-- You can add overlay content here -->
                   </div>
-              </div>
-              <div class="w-1/4 px-1 mb-2">
-                  <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
-                      <div class="h-[100px] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
-                          <!-- You can add overlay content here -->
-                      </div>
-                      <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
-                          <h3 class="text-lg font-semibold text-black">Product Name</h3> <!-- Changed text color to black -->
-                          <p class="text-sm text-gray-600 mb-1">Category:</p>
-                          <!-- You can add other product details here -->
-                      </div>
+                  <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
+                    <h3 class="text-lg font-semibold text-black">{{product.product_name}}</h3> <!-- Changed text color to black -->
+                    <p class="text-sm text-gray-600 mb-1">{{activeCategory.category_name}}</p>
                   </div>
+                </div>
+                </div>
+             </div>
+            </div>
+            <div class="h-[25vh] overflow-y-auto">
+                <div class="flex flex-wrap -mx-4">
+                  <!-- Start of new category block -->
+                    <button *ngFor="let category of categories" (click)="setActiveCategory(category)"   class="w-1/4 ml-4 h-[6vh] px-11 py-[19px] bg-stone-700 rounded-[10px] justify-center items-center gap-2.5 mt-3 inline-flex">
+                        <div class="text-slate-100 text-base font-medium font-['Quicksand'] uppercase">{{ category.category_name }}</div>
+                      </button>
+                  
+                  <!-- End of new category block -->
+                </div>
               </div>
-              <div class="w-1/4 px-1 mb-2">
-                  <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
-                      <div class="h-[100px] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
-                          <!-- You can add overlay content here -->
-                      </div>
-                      <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
-                          <h3 class="text-lg font-semibold text-black">Product Name</h3> <!-- Changed text color to black -->
-                          <p class="text-sm text-gray-600 mb-1">Category:</p>
-                          <!-- You can add other product details here -->
-                      </div>
-                  </div>
-              </div>
-              <div class="w-1/4 px-1 mb-2">
-                  <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
-                      <div class="h-[100px] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
-                          <!-- You can add overlay content here -->
-                      </div>
-                      <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
-                          <h3 class="text-lg font-semibold text-black">Product Name</h3> <!-- Changed text color to black -->
-                          <p class="text-sm text-gray-600 mb-1">Category:</p>
-                          <!-- You can add other product details here -->
-                      </div>
-                  </div>
-              </div>
-              <!-- End of new product block -->
-              <!-- Place other product blocks here -->
-          </div>
-      </div>
-  </div>
+              
+              
+    </div>
+  </div>
+      
 </div>
