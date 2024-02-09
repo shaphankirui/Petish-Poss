@@ -1,3 +1,4 @@
+import { HotToastModule } from '@ngneat/hot-toast';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -7,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutComponent } from './modules/main-layout/components/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layout/AuthLayout/auth-layout/auth-layout.component';
 import { MLayoutComponent } from './layout/MainLayout/m-layout/m-layout.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { MLayoutComponent } from './layout/MainLayout/m-layout/m-layout.componen
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MainLayoutComponent
+    MainLayoutComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    HotToastModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

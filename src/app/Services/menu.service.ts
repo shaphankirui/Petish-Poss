@@ -14,7 +14,7 @@ export class MenuService {
 
   constructor(private http:HttpClient) { }
   getCategories(): Observable<any>  {
-    const url = `${this.apiUrl}?deleted=false`;
+    const url = `${this.apiUrl}`;
     return this.http.get(url); 
    }
    getFilteredCategories(query: string): Observable<any> {
