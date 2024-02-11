@@ -1,39 +1,24 @@
 <div class="flex items-center justify-center h-screen bg-gray-200">
   <div class="bg-gray-300 p-8 shadow-md rounded-md w-3/4">
-<<<<<<< HEAD
     <h2 class="text-2xl font-bold mb-4">Add Product</h2>
-=======
-    <h2 class="text-2xl text-center font-bold mb-4">Add Product</h2>
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
     <form id="productForm" onsubmit="return validateForm()">
       <!-- Row 1 -->
       <div class="form-row mb-4">
         <label for="productName" class="block text-sm font-medium text-gray-600">Product Name:</label>
-<<<<<<< HEAD
         <input type="text" id="productName" name="productName" required
-=======
-        <input type="text" id="productName" name="productName" required [(ngModel)]="productName"
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productNameError"></span>
       </div>
 
       <div class="form-row mb-4">
         <label for="productPrice" class="block text-sm font-medium text-gray-600">Product Price:</label>
-<<<<<<< HEAD
         <input type="number" id="productPrice" name="productPrice" required
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productPriceError"></span>
-=======
-        <input type="number" id="productPrice" name="productPrice" required [(ngModel)]="productPrice"
-               class="mt-1 p-2 border rounded-md w-full">
-        <span class="error-message text-red" id="productPriceError"></span>
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
       </div>
 
       <div class="form-row mb-4">
         <label for="category" class="block text-sm font-medium text-gray-600">Category:</label>
-<<<<<<< HEAD
         <select id="category" name="category" required
                 class="mt-1 p-2 border rounded-md w-full">
           <option value="">Select Category</option>
@@ -43,25 +28,13 @@
           <option value="launch">Launch</option>
           <option value="Salads">Salads</option>
           <!-- Add more options as needed -->
-=======
-        <select id="category" name="category" required  [(ngModel)]="selectedCategory"
-        class="mt-1 p-2 border rounded-md w-full">
-          <option [ngValue]="0">Select a Category</option>
-          <option class="text-gray-700" *ngFor="let category of categories" [ngValue]="category.id">{{ category.category_name }}</option>
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
         </select>
         <span class="error-message text-red-500" id="categoryError"></span>
       </div>
 
-<<<<<<< HEAD
       <div class="form-row mb-4">
         <label for="productQuantity" class="block text-sm font-medium text-gray-600">Product Quantity:</label>
         <input type="number" id="productQuantity" name="productQuantity" required
-=======
-      <div class="form-row mb-4"*ngIf="!is_service">
-        <label for="productQuantity" class="block text-sm font-medium text-gray-600">Product Quantity:</label>
-        <input type="number" id="productQuantity" name="productQuantity" required [(ngModel)]="productQuantity"
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productQuantityError"></span>
       </div>
@@ -69,79 +42,21 @@
       <!-- Row 2 -->
       <div class="form-row mb-4">
         <label class="block text-sm font-medium text-gray-600">Is Service:</label>
-<<<<<<< HEAD
         <input type="checkbox" id="isService" name="isService" class="mt-1">
-=======
-        <input type="checkbox"  [(ngModel)]="is_service" id="isService" name="isService" class="mt-1">
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
       </div>
 
       <div class="form-row mb-4">
         <label for="specification" class="block text-sm font-medium text-gray-600">Specification:</label>
-<<<<<<< HEAD
         <textarea id="specification" name="specification" class="mt-1 p-2 border rounded-md w-full"></textarea>
       </div>
 
       <div class="form-row">
         <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Add Product</button>
-=======
-        <textarea [(ngModel)]="specificationArray" id="specification" name="specification" class="mt-1 p-2 border rounded-md w-full"></textarea>
-      </div>
-
-      <div class="form-row">
-        <button type="submit" class="bg-blue-500  text-white p-2 rounded-md" (click)="onSubmit()">Add Product</button>
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
       </div>
     </form>
   </div>
 </div>
 
-<<<<<<< HEAD
 <script>
   // Your validation script remains unchanged
 </script>
-=======
-  
-  <script>
-    function validateForm() {
-      var productName = document.getElementById("productName").value;
-      var productPrice = document.getElementById("productPrice").value;
-      var category = document.getElementById("category").value;
-      var productQuantity = document.getElementById("productQuantity").value;
-  
-      var productNameError = document.getElementById("productNameError");
-      var productPriceError = document.getElementById("productPriceError");
-      var categoryError = document.getElementById("categoryError");
-      var productQuantityError = document.getElementById("productQuantityError");
-  
-      productNameError.innerHTML = "";
-      productPriceError.innerHTML = "";
-      categoryError.innerHTML = "";
-      productQuantityError.innerHTML = "";
-  
-      var isValid = true;
-  
-      if (productName.trim() === "") {
-        productNameError.innerHTML = "Product Name is required";
-        isValid = false;
-      }
-  
-      if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
-        productPriceError.innerHTML = "Product Price must be a valid positive number";
-        isValid = false;
-      }
-  
-      if (category === "") {
-        categoryError.innerHTML = "Category is required";
-        isValid = false;
-      }
-  
-      if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
-        productQuantityError.innerHTML = "Product Quantity must be a valid positive integer";
-        isValid = false;
-      }
-  
-      return isValid;
-    }
-  </script>
->>>>>>> 6c56004107442467f10a1002c2825191b8d99013
