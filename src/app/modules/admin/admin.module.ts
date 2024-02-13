@@ -5,6 +5,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './components/table/table.component';
+import { ShiftsComponent } from './components/shifts/shifts.component';
 
 
 
@@ -12,7 +14,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     DashboardComponent,
     AddProductComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    TableComponent,
+    ShiftsComponent
   ],
   imports: [
     CommonModule,

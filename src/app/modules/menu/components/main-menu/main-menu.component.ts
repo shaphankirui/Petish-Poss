@@ -358,7 +358,8 @@ decrementItem(product: product) {
       this.authService.getCurrentUser().subscribe((user) => {
         if (user) {
           const servedBy = user.username;
-          this.loggedinUser=user.name;
+          this.loggedinUser="user";
+          // this.loggedinUser=user.name;
   
           const itemsToUpdateQuantity = this.selectedProducts.map((product) => ({
             categoryId: product.category_id, // Assuming you have categoryId in your product object
@@ -399,7 +400,8 @@ decrementItem(product: product) {
             ShiftID: shift.id,
             Items: itemsToSend,
             Total: this.calculateTotalPrice(),
-            Served_by: servedBy,
+            // Served_by: servedBy,
+            Served_by: 'Shaphan',
             paymentMode: 'Cash',
             amountPaid: 0,
             comments:this.comments,
