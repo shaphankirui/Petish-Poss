@@ -1,10 +1,14 @@
 <div class="mt-1">
  <div class="flex flex-row justify-between mr-4 ">
   <div class="flex flex-row justify-between items-center w-[30%] pl-3">
-    <input type="text" placeholder="Search product or any order" class="w-[357px] h-[58px] bg-slate-100 rounded-[10px] text-neutral-400 text-[15px] font-normal font-['Quicksand']">
+    
+   <div class="flex flex-row bg-slate-100 items-center pl-3 rounded-lg">
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15.625 13.75H14.6375L14.2875 13.4125C15.5125 11.9875 16.25 10.1375 16.25 8.125C16.25 3.6375 12.6125 0 8.125 0C3.6375 0 0 3.6375 0 8.125C0 12.6125 3.6375 16.25 8.125 16.25C10.1375 16.25 11.9875 15.5125 13.4125 14.2875L13.75 14.6375V15.625L20 21.8625L21.8625 20L15.625 13.75ZM8.125 13.75C5.0125 13.75 2.5 11.2375 2.5 8.125C2.5 5.0125 5.0125 2.5 8.125 2.5C11.2375 2.5 13.75 5.0125 13.75 8.125C13.75 11.2375 11.2375 13.75 8.125 13.75Z" fill="#89928E"/>
-    </svg>
+      <path d="M15.625 13.75H14.6375L14.2875 13.4125C15.5125 11.9875 16.25 10.1375 16.25 8.125C16.25 3.6375 12.6125 0 8.125 0C3.6375 0 0 3.6375 0 8.125C0 12.6125 3.6375 16.25 8.125 16.25C10.1375 16.25 11.9875 15.5125 13.4125 14.2875L13.75 14.6375V15.625L20 21.8625L21.8625 20L15.625 13.75ZM8.125 13.75C5.0125 13.75 2.5 11.2375 2.5 8.125C2.5 5.0125 5.0125 2.5 8.125 2.5C11.2375 2.5 13.75 5.0125 13.75 8.125C13.75 11.2375 11.2375 13.75 8.125 13.75Z" fill="#89928E"/>
+  </svg>
+    <input type="text" placeholder="Search product or any order" (input)="onInputChange()" [(ngModel)]="query" class="w-[357px] h-[58px] bg-slate-100 rounded-[10px] text-neutral-400 text-[15px] font-normal font-['Quicksand'] p-3">
+    
+   </div>
 </div>
 <div class="flex flex-row justify-between items-center w-[30%]">
   <h1 >Table</h1>
@@ -18,8 +22,8 @@
             <div class="flex flex-wrap -mx-4 "*ngIf="activeCategory">
                 
               <!-- Start of new product block -->
-              <div class="w-1/4 px-4 mb-2 h-[20vh] mt-1 " *ngFor="let product of activeCategory.products">
-                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md ">
+              <div class="w-1/4 px-4 mb-2 h-[20vh] mt-1 " *ngFor="let product of (!query ?  activeCategory.products : filteredProducts )">
+                <div class="bg-gray-200 rounded-lg overflow-hidden  shadow-md ">
                   <div class="flex flex-row justify-evenly">
                     <button (click)="decrementItem(product)" class=" h-[6vh] bg-cover bg-center relative" style="background-image: url('your-image-url.jpg')">
                       <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,12 +36,18 @@
                           </svg>                        
                   </button>
                   </div>
-                  <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
+                 <div>
+                   <div class="p-4 bg-gray-300"> <!-- Added bg-gray-300 class for background color -->
                     <h3 class="text-lg font-semibold text-black">{{product.product_name}}</h3> <!-- Changed text color to black -->
                     <p class="text-sm text-gray-600 mb-1">{{activeCategory.category_name}}</p>
+                    <h6 class="text-sm font-semibold text-black">Ksh.{{product.product_price}}</h6> 
                   </div>
+                 </div>
                 </div>
                 </div>
+             </div>
+             <div>
+              
              </div>
             </div>
             <div class="h-[25vh] overflow-y-auto">
@@ -58,38 +68,43 @@
     <div>
       <div class="flex flex-row justify-between items-center pl-3 pr-3 mt-3 text-black">
         <h1>Order#</h1>
-        <h1>8484884844</h1>
+        <h1>84848</h1>
       </div>
       <div class="flex flex-row justify-between items-center pl-3  pr-3 text-black">
         <h1>Guests 2</h1>
         <h1>Table 1</h1>
       </div>
     </div>
-    <div *ngIf="selectedProducts && selectedProducts.length > 0">
-      <div *ngFor="let product of selectedProducts; let ndx = index;"  class="flex flex-row bg-gray-300 justify-between rounded-lg px-3 py-3 mt-3">
-        <div class="flex flex-col justify-center items-center">
-          <h1>{{ product.product_name }}</h1>
-          <h1>{{product.product_price}}</h1>
-        </div>
-        <div class="flex flex-col justify-center items-center">
-          <h1>Quantity</h1>
-          <h1>{{product.selectedItems}}</h1>
-        </div>
-    </div>
-   
+    <div class=" h-[50vh] overflow-y-auto">
+      <div *ngIf="selectedProducts && selectedProducts.length > 0" >
+        <div *ngFor="let product of selectedProducts; let ndx = index;"  class="flex flex-row bg-gray-300 justify-between rounded-lg px-3 py-3 mt-3">
+          <div class="flex flex-col justify-center items-center">
+            <h1>{{ product.product_name }}</h1>
+            <h1>{{product.product_price}}</h1>
+          </div>
+          <div class="flex flex-col justify-center items-center">
+            <h1>Quantity</h1>
+            <h1>{{product.selectedItems}}</h1>
+          </div>
+      </div>
+     
+      </div>
+      <div *ngIf="selectedProducts && selectedProducts.length <= 0" class="flex justify-center items-center">
+        <h1 class="items-center text-black">No selected Items</h1>
+      </div>
     </div>
     <div class="flex flex-col gap-6 h-[40vh] bg-gray-100 rounded-lg mt-3">
       <div class="flex flex-row justify-between items-center pl-3 pr-3 text-black">
         <h1>SubTotal</h1>
-        <h1>Ksh.2000</h1>
+        <h1> Ksh. {{ (calculateTotalPrice() * 0.84).toFixed(2) }}</h1>
       </div>
       <div class="flex flex-row justify-between items-center pl-3 pr-3 text-black">
         <h1>Vat Charge 16%</h1>
-        <h1>Ksh.100</h1>
+        <h1> Ksh. {{ (calculateTotalPrice() * 0.16).toFixed(2) }}</h1>
       </div>
       <div class="flex flex-row justify-between items-center pl-3 pr-3 text-black">
         <h1>TOTAL</h1>
-        <h1>Ksh.2100</h1>
+        <h1>Ksh  Ksh. {{ (calculateTotalPrice() ).toFixed(2) }}</h1>
       </div>
       <div class="flex flex-row justify-between items-center pl-3 pr-3 text-black">
         <button class="h-10 bg-red-500 w-[40%]  items-center rounded-lg hover:bg-rose-500">Cancel</button>

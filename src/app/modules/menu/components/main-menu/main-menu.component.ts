@@ -114,6 +114,7 @@ export class MainMenuComponent implements OnInit {
             specification: JSON.parse(product.specification) // Parse the specification string into an array
           }))
       }));
+      this.activeCategory=this.categories[0];
       console.log('Categories', this.categories);
       this.categories.forEach((category) => {
         category.num_products = category.products.length;
@@ -164,9 +165,27 @@ export class MainMenuComponent implements OnInit {
   }
 
   setActiveCategory(category: Category) {
+    if(!this.selectedTable){
+      this.toast.info('Select Table First');
+      this.router.navigate(['/admin/tables']);
+      return;
+    }
     this.activeCategory = category;
-    this.query='';
-    console.log('Active Category',this.activeCategory)
+    // this.query='';
+    // console.log('Active Category',this.activeCategory)
+  }
+
+  categoryProducts(category_id:number){
+    this.filteredProducts = this.categories.flatMap(category =>
+      category.products.filter(product =>
+        product.product_name.toLowerCase().includes(this.query.toLowerCase()  ) && product.category_id===category_id && !product.deleted
+      )
+      
+    );
+    console.log('selected category productsddddd,', this.filteredProducts)
+    this.filteredProducts.filter((product: any) => product.category_id===category_id && !product.deleted )
+    console.log('selected category products,', this.filteredProducts)
+
   }
 
 
@@ -176,6 +195,7 @@ export class MainMenuComponent implements OnInit {
   
     // if the selected table is false or advance order > 0 return
     if (this.selectedTable || this.advancedOrderId) {
+
       // Check if the product is a service (not countable)
       if (product.is_service) {
         // For service products, allow incrementing even if it's zero
@@ -356,104 +376,100 @@ decrementItem(product: product) {
       }
   
       this.authService.getCurrentUser().subscribe((user) => {
-        if (user) {
-          const servedBy = user.username;
-          this.loggedinUser="user";
-          // this.loggedinUser=user.name;
-  
-          const itemsToUpdateQuantity = this.selectedProducts.map((product) => ({
-            categoryId: product.category_id, // Assuming you have categoryId in your product object
-            productId: product.id,
-            productData: {
-              product_quantity: product.product_quantity 
-            }
-          }));
-  
-          itemsToUpdateQuantity.forEach((item) => {
-            this.menuService.updateProduct(item.categoryId, item.productId, item.productData)
-              .subscribe(
-                () => {
-                  // Successfully updated product quantity
-                },
-                (error) => {
-                  console.error('Error updating product quantity:', error);
-                  this.notificationService.error('Failed To Update Product Quantity');
-                }
-              );
-          });
-  
-          const itemsToSend = this.selectedProducts.map((product) => ({
-            name: `${product.product_name} ${product.selectedSpecification||""}`, // Concatenate name and specification
-            id: product.id,
-            category_id:product.category_id,
-            price: product.product_price,
-            selectedItems: product.selectedItems || 0,
-            specification: product.specification,
-          }));
-          
+        const servedBy = 'username';
+        this.loggedinUser="user";
+        // this.loggedinUser=user.name;
 
-          console.log('Items send to printo server', itemsToSend);
+        const itemsToUpdateQuantity = this.selectedProducts.map((product) => ({
+          categoryId: product.category_id, // Assuming you have categoryId in your product object
+          productId: product.id,
+          productData: {
+            product_quantity: product.product_quantity 
+          }
+        }));
 
-  
-          const order = {
-            TableName: this.selectedTable?.name || 'Table 1',
-            ShiftID: shift.id,
-            Items: itemsToSend,
-            Total: this.calculateTotalPrice(),
-            // Served_by: servedBy,
-            Served_by: 'Shaphan',
-            paymentMode: 'Cash',
-            amountPaid: 0,
-            comments:this.comments,
-            Cash_paid:'0',
-            Mpesa_paid:'0',
-            Bank_paid:'0',
-            Voucher_amount:0,
-            Complimentary_amount:0,
-          };
-  
-          this.http.post(`${environment.apiRootUrl}/orders`, order)
-            .pipe(
-              catchError((error) => {
-                console.error('Error posting order:', error);
-                return of(null);
-              })
-            )
+        itemsToUpdateQuantity.forEach((item) => {
+          this.menuService.updateProduct(item.categoryId, item.productId, item.productData)
             .subscribe(
-              (response: any) => {
-                if (response) {
-                  this.orderIdToPrint=response.id;
-                  this.totalToPrint=response.Total;
-                  console.log('Order posted id response', this.orderIdToPrint);
-                  this.clearSelectedItems();
-                  this.notificationService.success('Order Posted');
-                  this.postDataToPrint(this.selectedProductsToPrint);
-                  this.clicked=false;
-
-                  
-                  // console.log('Table marked as occupied', this.selectedTable);
-  
-                  if (this.selectedTableId) {
-                    // console.log('Table marked as occupied', this.selectedTableId);
-  
-                    this.tableService.markTableAsOccupied(this.selectedTableId)
-                      .subscribe(() => {
-                        // console.log('Table marked as occupied');
-                        // You can perform additional actions or update UI here
-                      });
-                  } else {
-                    console.log('Failed to mark the table cleared', Error);
-                  }
-  
-                  // this.printOrder(order);
-                } else {
-                  this.notificationService.error('Failed To Post Order');
-                }
+              () => {
+                // Successfully updated product quantity
+              },
+              (error) => {
+                console.error('Error updating product quantity:', error);
+                this.notificationService.error('Failed To Update Product Quantity');
               }
             );
-        } else {
-          this.notificationService.error('User information not found');
-        }
+        });
+
+        const itemsToSend = this.selectedProducts.map((product) => ({
+          name: `${product.product_name} ${product.selectedSpecification||""}`, // Concatenate name and specification
+          id: product.id,
+          category_id:product.category_id,
+          price: product.product_price,
+          selectedItems: product.selectedItems || 0,
+          specification: product.specification,
+        }));
+        
+
+        console.log('Items send to printo server', itemsToSend);
+
+
+        const order = {
+          TableName: this.selectedTable?.name || 'Table 1',
+          ShiftID: shift.id,
+          Items: itemsToSend,
+          Total: this.calculateTotalPrice(),
+          // Served_by: servedBy,
+          Served_by: 'Shaphan',
+          paymentMode: 'Cash',
+          amountPaid: 0,
+          comments:this.comments,
+          Cash_paid:'0',
+          Mpesa_paid:'0',
+          Bank_paid:'0',
+          Voucher_amount:0,
+          Complimentary_amount:0,
+        };
+
+        this.http.post(`${environment.apiRootUrl}/orders`, order)
+          .pipe(
+            catchError((error) => {
+              console.error('Error posting order:', error);
+              return of(null);
+            })
+          )
+          .subscribe(
+            (response: any) => {
+              if (response) {
+                this.orderIdToPrint=response.id;
+                this.totalToPrint=response.Total;
+                console.log('Order posted id response', this.orderIdToPrint);
+                this.clearSelectedItems();
+                this.notificationService.success('Order Posted');
+                this.postDataToPrint(this.selectedProductsToPrint);
+                this.clicked=false;
+
+                
+                // console.log('Table marked as occupied', this.selectedTable);
+
+                if (this.selectedTableId) {
+                  // console.log('Table marked as occupied', this.selectedTableId);
+
+                  this.tableService.markTableAsOccupied(this.selectedTableId)
+                    .subscribe(() => {
+                      // console.log('Table marked as occupied');
+                      // You can perform additional actions or update UI here
+                    });
+                } else {
+                  console.log('Failed to mark the table cleared', Error);
+                }
+
+                // this.printOrder(order);
+              } else {
+                this.notificationService.error('Failed To Post Order');
+              }
+            }
+          );
       });
     });
   }
