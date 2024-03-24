@@ -10,6 +10,8 @@ const httpOptions = {
 })
 export class MenuService {
   private apiUrl = `${environment.apiRootUrl}/categories`;
+  private inventoryEndpoint =`${environment.apiRootUrl}`; 
+
 
 
   constructor(private http:HttpClient) { }
@@ -133,6 +135,15 @@ export class MenuService {
 
   getCategoryWithProducts(categoryId: number): Observable<any> {
     const url = `${this.apiUrl}/${categoryId}/products`;
+
+    return this.http.get<any>(url);
+  }
+
+  postToInventory(updatedProduct: any): Observable<any> {
+    return this.http.post(`${this.inventoryEndpoint}/inventory`, updatedProduct);
+  }
+  getInventory(): Observable<any> {
+    const url = `${this.inventoryEndpoint}/inventory`;
 
     return this.http.get<any>(url);
   }
