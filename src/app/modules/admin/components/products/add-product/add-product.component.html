@@ -33,11 +33,21 @@
                class="mt-1 p-2 border rounded-md w-full">
         <span class="error-message text-red-500" id="productQuantityError"></span>
       </div>
+      <div class="form-row mb-4"*ngIf="!is_service">
+        <label for="productQuantity" class="block text-sm font-medium text-gray-600">Product Store Quantity:</label>
+        <input type="number" id="productStoreQuantity" name="productStoreQuantity" required [(ngModel)]="productStoreQuantity"
+               class="mt-1 p-2 border rounded-md w-full">
+        <span class="error-message text-red-500" id="productQuantityError"></span>
+      </div>
 
       <!-- Row 2 -->
       <div class="form-row mb-4">
         <label class="block text-sm font-medium text-gray-600">Is Service:</label>
         <input type="checkbox"  [(ngModel)]="is_service" id="isService" name="isService" class="mt-1">
+      </div>
+      <div class="form-row mb-4">
+        <label class="block text-sm font-medium text-gray-600">Kitchen Product?:</label>
+        <input type="checkbox"  [(ngModel)]="is_kitchen" id="isKitchen" name="isKitchen" class="mt-1">
       </div>
 
       <div class="form-row mb-4">

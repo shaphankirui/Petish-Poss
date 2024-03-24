@@ -15,9 +15,11 @@ export class AddProductComponent implements OnInit {
   productName: string = '';
   productPrice: number = 0;
   productQuantity: number = 0;
+  productStoreQuantity: number = 0;
   selectedCategory: number = 0;
   categories: any[] = [];
   is_service: boolean = false;
+  is_kitchen: boolean = false;
   specificationArray: string | null = null;
 
   constructor(
@@ -47,6 +49,8 @@ export class AddProductComponent implements OnInit {
       product_quantity: productQuantityToSend,
       category_id: this.selectedCategory,
       is_service: this.is_service,
+      is_kitchen: this.is_kitchen,
+      store_quantity: this.productStoreQuantity,
       specification:
         this.specificationArray?.split(',').map((spec) => spec.trim()) || null,
     };

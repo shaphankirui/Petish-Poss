@@ -1,9 +1,9 @@
 <section class="container px-4 mx-auto">
-    <input    (input)="onInputChange()" type="text" placeholder="Search" [(ngModel)]="query" class="outline-none w-[250px] h-[40px] px-2 rounded-2 text-white bg-darkGray">
+    <input    (input)="onInputChange()" type="text" placeholder="Search" [(ngModel)]="query" class="outline-none w-[250px] h-[40px] px-2 rounded-2 text-black bg-darkGray">
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
             <div class="flex items-center gap-x-3">
-                <h2 class="text-lg font-medium text-white dark:text-white">Products</h2>
+                <h2 class="text-lg font-medium text-black dark:text-black">Products</h2>
   
                 <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{TotalProducts}} products</span>
             </div>
@@ -25,7 +25,7 @@
                 <span>Import</span>
             </button>
   
-            <button routerLink="/admin/add-product" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+            <button routerLink="/admin/add-product" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-black transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -58,7 +58,7 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray dark:bg-gray">
                             <tr>
-                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-black dark:text-black">
                                     <button class="flex items-center gap-x-3 focus:outline-none">
                                         <span>Products</span>
   
@@ -70,17 +70,17 @@
                                     </button>
                                 </th>
   
-                                <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-white dark:text-white">
+                                <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-white dark:text-black">
                                     Category
                                 </th>
   
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black dark:text-black">
                                     Price
                                 </th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">Quantity</th>
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">Quantity-Level</th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black dark:text-black">Quantity</th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black dark:text-black">Quantity-Level</th>
   
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">Options</th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black dark:text-black">Options</th>
                               
                             </tr>
                         </thead>
@@ -88,7 +88,7 @@
                             <tr *ngFor="let product of category.products">
                                 <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                     <div>
-                                        <h2 class="font-medium text-gray-800 dark:text-white ">{{product.product_name}}</h2>
+                                        <h2 class="font-medium text-gray-800 dark:text-black ">{{product.product_name}}</h2>
                                     </div>
                                 </td>
                                 <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
@@ -98,11 +98,11 @@
                                 </td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div>
-                                        <h4 class="text-white dark:text-white">Ksh. {{product.product_price}}</h4>
+                                        <h4 class="text-black dark:text-black">Ksh. {{product.product_price}}</h4>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                  <h4 class="text-white dark:text-white">{{ product.product_quantity }}</h4>
+                                  <h4 class="text-black dark:text-black">{{ product.product_quantity }}</h4>
                                 </td>
                                 
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
