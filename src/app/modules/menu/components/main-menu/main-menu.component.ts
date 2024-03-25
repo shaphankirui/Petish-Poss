@@ -20,7 +20,7 @@ import { UserService } from 'src/app/Services/user/user.service';
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.scss']
+  styleUrls: ['./main-menu.component.scss'],
 })
 export class MainMenuComponent implements OnInit {
   subTotal: number = 0;
@@ -35,41 +35,40 @@ export class MainMenuComponent implements OnInit {
   selectedTableId: number | null = null;
   shift: Shift | null = null;
   query: string = '';
-  colors = ['#CFDDDB', '#E4CDED', '#C2DBE9', '#E4CDED', '#F1C8D0','#C9CAEF'];
+  colors = ['#CFDDDB', '#E4CDED', '#C2DBE9', '#E4CDED', '#F1C8D0', '#C9CAEF'];
   private searchQuerySubscription: Subscription | undefined;
   filteredProducts: any[] = [];
   selectedCategory: any = null;
-  loggedinUser:string='';
-  comments:string='';
+  loggedinUser: string = '';
+  comments: string = '';
   advancedOrderId: number | null = null;
-  orderIdToPrint:any;
-  totalToPrint:any;
-  clicked:boolean=false;
+  orderIdToPrint: any;
+  totalToPrint: any;
+  clicked: boolean = false;
 
-
-
-
-
-  
-
-
-
-  constructor(private menuService: MenuService,private orderCommunicationService: OrderCommunicationService, private http: HttpClient, private searchService:SearchService,   private userService: UserService,  private authService: AuthService 
-    ,private tableService:TableService,private toast: HotToastService,private shiftApi:ShiftService,private route: ActivatedRoute,private router:Router,private notificationService: HotToastService) {
+  constructor(
+    private menuService: MenuService,
+    private orderCommunicationService: OrderCommunicationService,
+    private http: HttpClient,
+    private searchService: SearchService,
+    private userService: UserService,
+    private authService: AuthService,
+    private tableService: TableService,
+    private toast: HotToastService,
+    private shiftApi: ShiftService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private notificationService: HotToastService
+  ) {
     this.categories = [];
     this.assignColorsToCategories(); // Call the method to assign colors
     this.loadCategoriesAndSetFirstCategory();
-
-
-
-    
   }
-
 
   ngOnInit() {
     this.loadCategoriesAndSetFirstCategory();
     console.log('Current Route:', this.route.snapshot);
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       // Retrieve the order ID from the route parameters
       const orderIdFromRoute = +params['orderId'];
 
@@ -88,20 +87,11 @@ export class MainMenuComponent implements OnInit {
     // this.setupTableSubscription();
     this.subscribeToShiftName();
     this.selectedTable = this.tableService.getSelectedTable();
-    this.selectedTableId=this.selectedTable!.id
-    console.log('selected table',this.selectedTableId)
+    this.selectedTableId = this.selectedTable!.id;
+    console.log('selected table', this.selectedTableId);
     this.currentUser$ = this.userService.getCurrentUser();
     this.subscribeToSearchQueryChanges();
-    
-
-  
-    
-  
-  
-
   }
- 
-
 
   loadCategoriesAndSetFirstCategory() {
     this.menuService.getCategories().subscribe((data: any) => {
@@ -111,10 +101,10 @@ export class MainMenuComponent implements OnInit {
           .filter((product: any) => !product.deleted)
           .map((product: any) => ({
             ...product,
-            specification: JSON.parse(product.specification) // Parse the specification string into an array
-          }))
+            specification: JSON.parse(product.specification), // Parse the specification string into an array
+          })),
       }));
-      this.activeCategory=this.categories[0];
+      this.activeCategory = this.categories[0];
       console.log('Categories', this.categories);
       this.categories.forEach((category) => {
         category.num_products = category.products.length;
@@ -122,35 +112,36 @@ export class MainMenuComponent implements OnInit {
       this.assignColorsToCategories();
     });
   }
-  
 
- filterCategories() {
-  if (this.query.trim() === '') {
-    this.loadCategoriesAndSetFirstCategory(); // Load all categories if the query is empty
-  } else {
-    const lowercaseQuery = this.query.toLowerCase();
-    this.menuService.getCategories().subscribe((data: any) => {
-      this.categories = data.map((category: any) => ({
-        ...category,
-        products: category.products
-          .filter((product: any) =>
-            product.product_name.toLowerCase().includes(lowercaseQuery)
-          )
-          .filter((product: any) => !product.deleted)
-      }))
-      .filter((category: any) =>
-        category.category_name.toLowerCase().includes(lowercaseQuery) ||
-        category.products.length > 0 // Filter categories with matching products
-      );
-      console.log('Filtered Categories', this.categories);
-      this.assignColorsToCategories();
-    });
+  filterCategories() {
+    if (this.query.trim() === '') {
+      this.loadCategoriesAndSetFirstCategory(); // Load all categories if the query is empty
+    } else {
+      const lowercaseQuery = this.query.toLowerCase();
+      this.menuService.getCategories().subscribe((data: any) => {
+        this.categories = data
+          .map((category: any) => ({
+            ...category,
+            products: category.products
+              .filter((product: any) =>
+                product.product_name.toLowerCase().includes(lowercaseQuery)
+              )
+              .filter((product: any) => !product.deleted),
+          }))
+          .filter(
+            (category: any) =>
+              category.category_name.toLowerCase().includes(lowercaseQuery) ||
+              category.products.length > 0 // Filter categories with matching products
+          );
+        console.log('Filtered Categories', this.categories);
+        this.assignColorsToCategories();
+      });
+    }
   }
-}
 
   assignColorsToCategories() {
     const numCategories = this.categories.length;
-    console.log('category len for colors',numCategories)
+    console.log('category len for colors', numCategories);
     for (let i = 0; i < numCategories; i++) {
       const colorIndex = i < this.colors.length ? i : i % this.colors.length;
       this.categories[i].color = this.colors[colorIndex];
@@ -165,7 +156,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   setActiveCategory(category: Category) {
-    if(!this.selectedTable){
+    if (!this.selectedTable) {
       this.toast.info('Select Table First');
       this.router.navigate(['/admin/tables']);
       return;
@@ -175,58 +166,73 @@ export class MainMenuComponent implements OnInit {
     // console.log('Active Category',this.activeCategory)
   }
 
-  categoryProducts(category_id:number){
-    this.filteredProducts = this.categories.flatMap(category =>
-      category.products.filter(product =>
-        product.product_name.toLowerCase().includes(this.query.toLowerCase()  ) && product.category_id===category_id && !product.deleted
+  categoryProducts(category_id: number) {
+    this.filteredProducts = this.categories.flatMap((category) =>
+      category.products.filter(
+        (product) =>
+          product.product_name
+            .toLowerCase()
+            .includes(this.query.toLowerCase()) &&
+          product.category_id === category_id &&
+          !product.deleted
       )
-      
     );
-    console.log('selected category productsddddd,', this.filteredProducts)
-    this.filteredProducts.filter((product: any) => product.category_id===category_id && !product.deleted )
-    console.log('selected category products,', this.filteredProducts)
-
+    console.log('selected category productsddddd,', this.filteredProducts);
+    this.filteredProducts.filter(
+      (product: any) => product.category_id === category_id && !product.deleted
+    );
+    console.log('selected category products,', this.filteredProducts);
   }
-
 
   incrementItem(product: product) {
     console.log('advancedOrderIdddddd', this.advancedOrderId);
     console.log('selectedTable', this.selectedTable);
-  
+
     // if the selected table is false or advance order > 0 return
     if (this.selectedTable || this.advancedOrderId) {
-
       // Check if the product is a service (not countable)
       if (product.is_service) {
         // For service products, allow incrementing even if it's zero
         product.selectedItems = (product.selectedItems || 0) + 1;
         this.addToSelectedProducts(product);
         console.log('SELECTED ITEMS', this.selectedProducts);
-  
+
         // Update selectedProductsToPrint after modifying selectedProducts
         this.selectedProductsToPrint = [...this.selectedProducts]; // Sync the arrays
-        console.log('Products selected for printing', this.selectedProductsToPrint);
+        console.log(
+          'Products selected for printing',
+          this.selectedProductsToPrint
+        );
       } else {
         // For countable products
         if (product.product_quantity && Number(product.product_quantity) > 0) {
           // Check if quantity is less than 5
           if (Number(product.product_quantity) <= 5) {
-            this.notificationService.info('Running low on ' + product.product_name);
+            this.notificationService.info(
+              'Running low on ' + product.product_name
+            );
           }
-  
+
           product.selectedItems = (product.selectedItems || 0) + 1;
-          product.product_quantity = String(Number(product.product_quantity) - 1);
+          product.product_quantity = String(
+            Number(product.product_quantity) - 1
+          );
           this.addToSelectedProducts(product);
           console.log('SELECTED ITEMS', this.selectedProducts);
-  
+
           // Check if quantity is zero
           if (Number(product.product_quantity) === 0) {
-            this.notificationService.error('Sorry, this product is out of stock');
+            this.notificationService.error(
+              'Sorry, this product is out of stock'
+            );
           }
-  
+
           // Update selectedProductsToPrint after modifying selectedProducts
           this.selectedProductsToPrint = [...this.selectedProducts]; // Sync the arrays
-          console.log('Products selected for printing', this.selectedProductsToPrint);
+          console.log(
+            'Products selected for printing',
+            this.selectedProductsToPrint
+          );
         } else {
           this.notificationService.error('Sorry, this product is out of stock');
         }
@@ -236,11 +242,9 @@ export class MainMenuComponent implements OnInit {
       return;
     }
   }
-  
-  
 
-decrementItem(product: product) {
-    if (!this.selectedTable||this.advancedOrderId) {
+  decrementItem(product: product) {
+    if (!this.selectedTable || this.advancedOrderId) {
       this.notificationService.error('Select Table First');
       return;
     }
@@ -262,42 +266,43 @@ decrementItem(product: product) {
 
       // Update selectedProductsToPrint after modifying selectedProducts
       this.selectedProductsToPrint = [...this.selectedProducts]; // Sync the arrays
-      console.log('Products selected for printing', this.selectedProductsToPrint);
+      console.log(
+        'Products selected for printing',
+        this.selectedProductsToPrint
+      );
     } else {
       // this.notificationService.showError('Select Table First');
     }
-}
+  }
 
-  
   updateSelectedProducts(product: product) {
     const index = this.selectedProducts.findIndex((p) => p.id === product.id);
-  
+
     if (index !== -1) {
       // Update the selectedItems for the existing product
       this.selectedProducts[index].selectedItems = product.selectedItems;
-      const totalPrice = (parseFloat(product.product_price) * (product.selectedItems || 0)) || 0;
+      const totalPrice =
+        parseFloat(product.product_price) * (product.selectedItems || 0) || 0;
       this.productTotals[index] = totalPrice;
     }
   }
-  
+
   removeFromSelectedProducts(product: product) {
     const index = this.selectedProducts.findIndex((p) => p.id === product.id);
-  
+
     if (index !== -1) {
       this.selectedProducts.splice(index, 1);
       this.productTotals.splice(index, 1);
     }
   }
-  
-
-
 
   addToSelectedProducts(product: product) {
     // Check if the product is already in the array
     const index = this.selectedProducts.findIndex((p) => p.id === product.id);
-  
-    const totalPrice = (parseFloat(product.product_price) * (product.selectedItems || 0)) || 0;
-  
+
+    const totalPrice =
+      parseFloat(product.product_price) * (product.selectedItems || 0) || 0;
+
     if (index !== -1) {
       // If the product is already in the array, update its selectedItems
       this.selectedProducts[index].selectedItems = product.selectedItems;
@@ -309,22 +314,16 @@ decrementItem(product: product) {
       // Add the total for this new product to the productTotals array
       this.productTotals.push(totalPrice);
     }
-  
+
     this.selectedProductsToPrint = [...this.selectedProducts]; // Update selectedProductsToPrint
     console.log('Products selected for printing', this.selectedProductsToPrint);
-}
+  }
 
-
-  
-
-  
-  
-  
   get selectedProductsTotal(): number {
     return this.selectedProducts.reduce((total, product) => {
       const price = parseFloat(product.product_price);
       const quantity = product.selectedItems || 0;
-      return total + (price * quantity);
+      return total + price * quantity;
     }, 0);
   }
 
@@ -335,25 +334,25 @@ decrementItem(product: product) {
     }
     return total;
   }
-  
-  
 
   deleteItem(receiptItem: any) {
     // Set the quantity to 0
     receiptItem.selectedItems = 0;
-    
+
     // Remove the deleted item from selectedProducts
-    const index = this.selectedProducts.findIndex((p) => p.id === receiptItem.id);
+    const index = this.selectedProducts.findIndex(
+      (p) => p.id === receiptItem.id
+    );
     if (index !== -1) {
       this.selectedProducts.splice(index, 1);
     }
   }
-  
+
   resetSelectedItems() {
-    this.selectedProducts.forEach(product => {
+    this.selectedProducts.forEach((product) => {
       product.selectedItems = 0;
     });
-    console.log('selected prooooo',this.selectedProducts)
+    console.log('selected prooooo', this.selectedProducts);
   }
 
   decreaseOrDecreaseOrder() {
@@ -361,58 +360,61 @@ decrementItem(product: product) {
   }
 
   postSelectedItemsToBackend() {
-    this.clicked=true;
+    this.clicked = true;
     if (this.selectedProducts.length === 0) {
       this.notificationService.error('Select items to place an order');
-      this.clicked=false;
+      this.clicked = false;
       return;
     }
 
     this.shiftApi.currentShift$.subscribe((shift: Shift | null) => {
       if (!shift) {
         this.notificationService.error('Start Shift First');
-        this.clicked=false;
+        this.clicked = false;
         return;
       }
-  
+
       this.authService.getCurrentUser().subscribe((user) => {
         const servedBy = 'username';
-        this.loggedinUser="user";
+        this.loggedinUser = 'user';
         // this.loggedinUser=user.name;
 
         const itemsToUpdateQuantity = this.selectedProducts.map((product) => ({
           categoryId: product.category_id, // Assuming you have categoryId in your product object
           productId: product.id,
           productData: {
-            product_quantity: product.product_quantity 
-          }
+            product_quantity: product.product_quantity,
+          },
         }));
 
         itemsToUpdateQuantity.forEach((item) => {
-          this.menuService.updateProduct(item.categoryId, item.productId, item.productData)
+          this.menuService
+            .updateProduct(item.categoryId, item.productId, item.productData)
             .subscribe(
               () => {
                 // Successfully updated product quantity
               },
               (error) => {
                 console.error('Error updating product quantity:', error);
-                this.notificationService.error('Failed To Update Product Quantity');
+                this.notificationService.error(
+                  'Failed To Update Product Quantity'
+                );
               }
             );
         });
 
         const itemsToSend = this.selectedProducts.map((product) => ({
-          name: `${product.product_name} ${product.selectedSpecification||""}`, // Concatenate name and specification
+          name: `${product.product_name} ${
+            product.selectedSpecification || ''
+          }`, // Concatenate name and specification
           id: product.id,
-          category_id:product.category_id,
+          category_id: product.category_id,
           price: product.product_price,
           selectedItems: product.selectedItems || 0,
           specification: product.specification,
         }));
-        
 
         console.log('Items send to printo server', itemsToSend);
-
 
         const order = {
           TableName: this.selectedTable?.name || 'Table 1',
@@ -423,53 +425,52 @@ decrementItem(product: product) {
           Served_by: 'Shaphan',
           paymentMode: 'Cash',
           amountPaid: 0,
-          comments:this.comments,
-          Cash_paid:'0',
-          Mpesa_paid:'0',
-          Bank_paid:'0',
-          Voucher_amount:0,
-          Complimentary_amount:0,
+          comments: this.comments,
+          Cash_paid: '0',
+          Mpesa_paid: '0',
+          Bank_paid: '0',
+          Voucher_amount: 0,
+          Complimentary_amount: 0,
         };
 
-        this.http.post(`${environment.apiRootUrl}/orders`, order)
+        this.http
+          .post(`${environment.apiRootUrl}/orders`, order)
           .pipe(
             catchError((error) => {
               console.error('Error posting order:', error);
               return of(null);
             })
           )
-          .subscribe(
-            (response: any) => {
-              if (response) {
-                this.orderIdToPrint=response.id;
-                this.totalToPrint=response.Total;
-                console.log('Order posted id response', this.orderIdToPrint);
-                this.clearSelectedItems();
-                this.notificationService.success('Order Posted');
-                this.postDataToPrint(this.selectedProductsToPrint);
-                this.clicked=false;
+          .subscribe((response: any) => {
+            if (response) {
+              this.orderIdToPrint = response.id;
+              this.totalToPrint = response.Total;
+              console.log('Order posted id response', this.orderIdToPrint);
+              this.clearSelectedItems();
+              this.notificationService.success('Order Posted');
+              this.postDataToPrint(this.selectedProductsToPrint);
+              this.clicked = false;
 
-                
-                // console.log('Table marked as occupied', this.selectedTable);
+              // console.log('Table marked as occupied', this.selectedTable);
 
-                if (this.selectedTableId) {
-                  // console.log('Table marked as occupied', this.selectedTableId);
+              if (this.selectedTableId) {
+                // console.log('Table marked as occupied', this.selectedTableId);
 
-                  this.tableService.markTableAsOccupied(this.selectedTableId)
-                    .subscribe(() => {
-                      // console.log('Table marked as occupied');
-                      // You can perform additional actions or update UI here
-                    });
-                } else {
-                  console.log('Failed to mark the table cleared', Error);
-                }
-
-                // this.printOrder(order);
+                this.tableService
+                  .markTableAsOccupied(this.selectedTableId)
+                  .subscribe(() => {
+                    // console.log('Table marked as occupied');
+                    // You can perform additional actions or update UI here
+                  });
               } else {
-                this.notificationService.error('Failed To Post Order');
+                console.log('Failed to mark the table cleared', Error);
               }
+
+              // this.printOrder(order);
+            } else {
+              this.notificationService.error('Failed To Post Order');
             }
-          );
+          });
       });
     });
   }
@@ -485,48 +486,52 @@ decrementItem(product: product) {
         this.notificationService.error('Start Shift First');
         return;
       }
-  
+
       this.authService.getCurrentUser().subscribe((user) => {
         if (user) {
           const servedBy = user.username;
-          this.loggedinUser=user.name;
-  
-          const itemsToUpdateQuantity = this.selectedProducts.map((product) => ({
-            categoryId: product.category_id, // Assuming you have categoryId in your product object
-            productId: product.id,
-            productData: {
-              product_quantity: product.product_quantity 
-            }
-          }));
-  
+          this.loggedinUser = user.name;
+
+          const itemsToUpdateQuantity = this.selectedProducts.map(
+            (product) => ({
+              categoryId: product.category_id, // Assuming you have categoryId in your product object
+              productId: product.id,
+              productData: {
+                product_quantity: product.product_quantity,
+              },
+            })
+          );
+
           itemsToUpdateQuantity.forEach((item) => {
-            this.menuService.updateProduct(item.categoryId, item.productId, item.productData)
+            this.menuService
+              .updateProduct(item.categoryId, item.productId, item.productData)
               .subscribe(
                 () => {
                   // Successfully updated product quantity
                 },
                 (error) => {
                   console.error('Error updating product quantity:', error);
-                  this.notificationService.error('Failed To Update Product Quantity');
+                  this.notificationService.error(
+                    'Failed To Update Product Quantity'
+                  );
                 }
               );
           });
-  
+
           const itemsToSend = this.selectedProducts.map((product) => ({
-            name: `${product.product_name} ${product.selectedSpecification||""}`, // Concatenate name and specification
+            name: `${product.product_name} ${
+              product.selectedSpecification || ''
+            }`, // Concatenate name and specification
             id: product.id,
-            category_id:product.category_id,
+            category_id: product.category_id,
             price: product.product_price,
             selectedItems: product.selectedItems || 0,
             specification: product.specification,
           }));
           const itemsJson = JSON.stringify(itemsToSend);
 
-          
-
           console.log('Items send to printo server', itemsJson);
 
-  
           const order = {
             shift_id: String(shift.id),
             items: itemsJson,
@@ -534,63 +539,63 @@ decrementItem(product: product) {
             waiters_name: servedBy,
             paymentMode: 'Cash',
             amountPaid: 0,
-            comments:this.comments,
-            Cash_paid:'0',
-            Mpesa_paid:'0',
-            Bank_paid:'0',
-            Voucher_amount:0,
-            Complimentary_amount:0,
+            comments: this.comments,
+            Cash_paid: '0',
+            Mpesa_paid: '0',
+            Bank_paid: '0',
+            Voucher_amount: 0,
+            Complimentary_amount: 0,
           };
-          console.log('order to advance table',order)
-  
-          this.http.put(`${environment.apiRootUrl}/advanced-orders/${this.advancedOrderId}`, order)
+          console.log('order to advance table', order);
+
+          this.http
+            .put(
+              `${environment.apiRootUrl}/advanced-orders/${this.advancedOrderId}`,
+              order
+            )
             .pipe(
               catchError((error) => {
                 console.error('Error posting order:', error);
                 return of(null);
               })
             )
-            .subscribe(
-              (response) => {
-                if (response) {
-                  this.clearSelectedItems();
-                  this.notificationService.success('Advanced Order  Posted Successfully');
-                  this.postDataToPrint(this.selectedProductsToPrint);
-                  this.router.navigate(['/orders/show_advaced_orders'])
-                  // this.logoutUser();
-                  // console.log('Table marked as occupied', this.selectedTable);
-  
-               
-  
-                  // this.printOrder(order);
-                } else {
-                  this.notificationService.error('Failed To Post Order');
-                }
+            .subscribe((response) => {
+              if (response) {
+                this.clearSelectedItems();
+                this.notificationService.success(
+                  'Advanced Order  Posted Successfully'
+                );
+                this.postDataToPrint(this.selectedProductsToPrint);
+                this.router.navigate(['/orders/show_advaced_orders']);
+                // this.logoutUser();
+                // console.log('Table marked as occupied', this.selectedTable);
+
+                // this.printOrder(order);
+              } else {
+                this.notificationService.error('Failed To Post Order');
               }
-            );
+            });
         } else {
           this.notificationService.error('User information not found');
         }
       });
     });
   }
- 
-  
+
   postDataToPrint(selectedProductsToPrint: any) {
     const url = 'http://localhost/C-POS-Printer-API/public/api/receipts';
     // const url = 'http://127.0.0.1:8000/api/receipts';
     // const url = 'http://127.0.0.1:8000/api/receipts';
-    console.log('items received for printing',selectedProductsToPrint)
+    console.log('items received for printing', selectedProductsToPrint);
     const itemsToSend = this.selectedProductsToPrint.map((product) => ({
       name: product.product_name,
       id: product.id,
       price: product.product_price,
-      selectedItems: product.selectedItems , // Ensure selectedItems is properly updated
+      selectedItems: product.selectedItems, // Ensure selectedItems is properly updated
     }));
-    
-  
+
     const servedBy = this.loggedinUser;
-  
+
     const data = {
       table_name: this.selectedTable?.name || 'Table 1',
       served_by: servedBy,
@@ -604,11 +609,10 @@ decrementItem(product: product) {
 
     console.log('data send to print', data);
 
-  
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
-  
+
     this.http.post(url, data, { headers }).subscribe(
       (response) => {
         console.log('Data posted successfully!', response);
@@ -622,15 +626,11 @@ decrementItem(product: product) {
       }
     );
   }
-  
-  
-  
 
   clearSelectedItems() {
     this.selectedProducts = [];
     this.productTotals = [];
     this.selectedTable = null;
-
   }
   selectTable(table: Table) {
     // Store the selected table in local storage
@@ -643,14 +643,14 @@ decrementItem(product: product) {
     });
   }
 
- 
-
   subscribeToSearchQueryChanges() {
-    this.searchQuerySubscription = this.searchService.searchQuery$.subscribe((query: string) => {
-      this.query = query;
-      console.log('Search input changed:', this.query);
-      this.loadCategoriesAndSetFirstCategory(); // Trigger reloading categories based on the new search query
-    });
+    this.searchQuerySubscription = this.searchService.searchQuery$.subscribe(
+      (query: string) => {
+        this.query = query;
+        console.log('Search input changed:', this.query);
+        this.loadCategoriesAndSetFirstCategory(); // Trigger reloading categories based on the new search query
+      }
+    );
   }
   onSearchInputChange() {
     this.filterCategories();
@@ -662,8 +662,8 @@ decrementItem(product: product) {
   }
   onInputChange() {
     if (this.query) {
-      this.filteredProducts = this.categories.flatMap(category =>
-        category.products.filter(product =>
+      this.filteredProducts = this.categories.flatMap((category) =>
+        category.products.filter((product) =>
           product.product_name.toLowerCase().includes(this.query.toLowerCase())
         )
       );
@@ -674,5 +674,4 @@ decrementItem(product: product) {
   logoutUser(): void {
     this.authService.logout();
   }
-
 }
